@@ -166,6 +166,7 @@ public:
 
 // Driver program
 int main() {
+    srand(time(0));
     DoublyLinkedList list;
     int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
 
@@ -182,10 +183,8 @@ int main() {
     list.pop_front();
     list.print();
 
-    cout << 
-    cout << "Deleting list, then trying to print.\n";
-    list.~DoublyLinkedList();
-    cout << "List forward: ";
+    cout << "Popping tail: \n";
+    list.pop_back();
     list.print();
 
     return 0;
