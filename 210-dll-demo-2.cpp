@@ -24,19 +24,40 @@ public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
     void delete_pos(int pos){
-        if (pos == 0){
-            head = head->next;
-            return;
-        }
+        //traversing to pos
         Node* temp  = head;
         for (int i = 0; i < pos; i++){
             temp = temp->next;
+            if (!temp){
+                cout << "Out of bounds.";
+                return;
+            }
         }
-        temp->next->prev = temp->prev;
-        temp->prev->next = temp->next;
-        
+        if (temp->prev) {
+            temp->prev->next = temp->next;
+        } else {
+            head = temp->next; // Deleting the head
+        }
+
+        if (temp->next) {
+            temp->next->prev = temp->prev;
+        } else {
+            tail = temp->prev; // Deleting the tail
+        }
+
+        delete temp;
     }
     
+    void pop_front(){
+        head = head->next;
+        head->prev = nullptr;
+    }
+
+    void pop_back(){
+        tail = tail->prev;
+        tail->next = nullptr;
+    }
+
     void push_back(int value) {
         Node* newNode = new Node(value);
         if (!tail)  // if there's no tail, the list is empty
@@ -90,7 +111,7 @@ public:
         temp->next = newNode;
     }
 
-    void delete_node(int value) {
+    void delete_val(int value) {
         if (!head) return; // Empty list
 
         Node* temp = head;
@@ -150,12 +171,18 @@ int main() {
 
     for (int i = 0; i < size; ++i)
         list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
-    cout << "List forward: ";
+    cout << "List forward: \n";
     list.print();
 
-    cout << "List backward: ";
-    list.print_reverse();
+    cout << "Deleting Node at index 3: \n";
+    list.delete_pos(3);
+    list.print();
 
+    cout << "Popping head: \n";
+    list.pop_front();
+    list.print();
+
+    cout << 
     cout << "Deleting list, then trying to print.\n";
     list.~DoublyLinkedList();
     cout << "List forward: ";
