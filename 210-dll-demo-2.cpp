@@ -29,13 +29,14 @@ public:
             return;
         }
         Node* temp  = head;
-        for (int i = 0; i <= pos; i++){
+        for (int i = 0; i < pos; i++){
             temp = temp->next;
         }
         temp->next->prev = temp->prev;
         temp->prev->next = temp->next;
         
     }
+    
     void push_back(int value) {
         Node* newNode = new Node(value);
         if (!tail)  // if there's no tail, the list is empty
